@@ -3,30 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   ClapTrap.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gserafio <gserafio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/16 18:29:00 by gserafio          #+#    #+#             */
-/*   Updated: 2026/03/16 21:04:03 by gserafio         ###   ########.fr       */
+/*   Updated: 2026/03/18 02:03:54 by gustavo-lin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef CLAPTRAP1_HPP
+#define CLAPTRAP1_HPP
 
 #include <iostream>
 
 class ClapTrap
 {
     public:
+        ClapTrap(void);
         ClapTrap(const std::string name);
         ClapTrap(ClapTrap const& class_copy);
+        ClapTrap& operator=(const ClapTrap& scavTrap);
         ~ClapTrap(void);
         
         void attack(const std::string& target);
         void takeDamage(unsigned int amount);
         void beRepaired(unsigned int amount);
         
-    private:
+    public:
         bool _checkLifeAndEnergyPoints(void);
         std::string _name;
-        unsigned int _hit_point;
-        unsigned int _energy_points;
-        unsigned int _attack_damage;
+        unsigned int _hitPoints;
+        unsigned int _energyPoints;
+        unsigned int _attackDamage;
 };
+
+#endif
