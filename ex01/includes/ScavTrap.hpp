@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ScavTrap.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
+/*   By: gserafio <gserafio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 22:00:22 by gustavo-lin       #+#    #+#             */
-/*   Updated: 2026/03/18 02:02:41 by gustavo-lin      ###   ########.fr       */
+/*   Updated: 2026/03/18 18:26:12 by gserafio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ class   ScavTrap : public ClapTrap
         void set_isModeGuardGate(bool _isGuardGate);
 
         void guardGate(void);
-    
+        void attack(const std::string& target);
+        
     private:
         bool _isModeGuardGate;      
 };

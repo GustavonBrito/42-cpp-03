@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ScavTrap.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
+/*   By: gserafio <gserafio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 23:35:50 by gustavo-lin       #+#    #+#             */
-/*   Updated: 2026/03/18 01:51:22 by gustavo-lin      ###   ########.fr       */
+/*   Updated: 2026/03/18 18:33:15 by gserafio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,15 @@ bool ScavTrap::get_isModeGuardGate(void) const
 void ScavTrap::set_isModeGuardGate(bool _isGuardGate)
 {
     _isModeGuardGate = _isGuardGate;
+}
+
+void ClapTrap::attack(const std::string& target)
+{
+    if (_checkLifeAndEnergyPoints())
+    {
+        std::cout << "ScavTrap " <<  _name << "attacks " << target << "causing " << _attackDamage << "points of damage!" << std::endl;
+        _energyPoints--;
+    }
 }
 
 void ScavTrap::guardGate(void)

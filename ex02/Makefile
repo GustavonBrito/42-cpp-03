@@ -2,7 +2,7 @@ CPP = c++
 
 CFLAGS  = -Wall -Wextra -Werror -std=c++98
 
-NAME = claptrap
+NAME = fragtrap
 
 SRCS =	$(shell find -name '*.cpp')
 

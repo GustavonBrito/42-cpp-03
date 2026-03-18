@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
+/*   By: gserafio <gserafio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/16 20:54:44 by gserafio          #+#    #+#             */
-/*   Updated: 2026/03/18 02:07:00 by gustavo-lin      ###   ########.fr       */
+/*   Updated: 2026/03/18 19:02:00 by gserafio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ClapTrap.hpp"
-#include "includes/ScavTrap.hpp"
+#include "includes/FragTrap.hpp"
 
 int main(void)
 {
@@ -44,43 +44,27 @@ int main(void)
         clap1.attack("Enemy");
     }
     
-    std::cout << "\n\n===== SCAVTRAP TESTS =====" << std::endl;
+    std::cout << "\n\n===== FRAGTRAP TESTS =====" << std::endl;
     
-    std::cout << "\n--- Test 1: ScavTrap Constructor with Name ---" << std::endl;
-    ScavTrap scav1("Scavenger-1");
+    std::cout << "\n--- Test 1: FragTrap Constructor with Name ---" << std::endl;
+    FragTrap frag1("Scavenger-1");
     
-    std::cout << "\n--- Test 2: ScavTrap Default Constructor ---" << std::endl;
-    ScavTrap scav2;
+    std::cout << "\n--- Test 2: FragTrap Default Constructor ---" << std::endl;
+    FragTrap frag2;
     
-    std::cout << "\n--- Test 3: ScavTrap Inherited Attack ---" << std::endl;
-    scav1.attack("Bandit");
+    std::cout << "\n--- Test 3: FragTrap Guard Gate ---" << std::endl;
+    frag1.highFivesGuys();
+      
+    std::cout << "\n--- Test 4: FragTrap Copy Constructor ---" << std::endl;
+    FragTrap frag3(frag1);
     
-    std::cout << "\n--- Test 4: ScavTrap Inherited Take Damage ---" << std::endl;
-    scav1.takeDamage(5);
+    std::cout << "\n--- Test 5: FragTrap Assignment Operator ---" << std::endl;
+    FragTrap frag4("Frag4");
+    frag3 = frag1;
     
-    std::cout << "\n--- Test 5: ScavTrap Inherited Be Repaired ---" << std::endl;
-    scav1.beRepaired(3);
-    
-    std::cout << "\n--- Test 6: ScavTrap Guard Gate ---" << std::endl;
-    scav1.guardGate();
-    
-    std::cout << "\n--- Test 7: ScavTrap Drain Energy ---" << std::endl;
-    for (int i = 0; i < 55; i++)
-    {
-        scav1.attack("Goblin");
-    }
-    
-    std::cout << "\n--- Test 8: ScavTrap Copy Constructor ---" << std::endl;
-    ScavTrap scav3(scav1);
-    
-    std::cout << "\n--- Test 9: ScavTrap Assignment Operator ---" << std::endl;
-    ScavTrap scav4("Scav4");
-    scav4 = scav1;
-    
-    std::cout << "\n--- Test 10: ScavTrap Guard Gate When Dead ---" << std::endl;
-    ScavTrap scav5("DeadScav");
-    scav5.takeDamage(100);
-    scav5.guardGate();
+    std::cout << "\n--- Test 6: FragTrap Guard Gate When Dead ---" << std::endl;
+    FragTrap frag5("DeadScav");
+    frag5.highFivesGuys();
     
     std::cout << "\n===== DESTRUCTORS =====" << std::endl;
     return 0;

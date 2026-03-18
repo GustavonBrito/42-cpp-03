@@ -1,38 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ScavTrap.hpp                                       :+:      :+:    :+:   */
+/*   FragTrap.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
+/*   By: gserafio <gserafio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 22:00:22 by gustavo-lin       #+#    #+#             */
-/*   Updated: 2026/03/18 02:02:41 by gustavo-lin      ###   ########.fr       */
+/*   Updated: 2026/03/18 18:54:31 by gserafio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCAVTRAP_HPP
-#define SCAVTRAP_HPP
+#ifndef FRAGTRAP_HPP
+#define FRAGTRAP_HPP
 
 #include "ClapTrap.hpp"
 
-class   ScavTrap : public ClapTrap 
+class   FragTrap : public ClapTrap 
 {
     public:
-        ScavTrap(void);
-        ScavTrap(const std::string name);
-        ScavTrap(const ScavTrap& scavTrap);
+        FragTrap(void);
+        FragTrap(const std::string name);
+        FragTrap(const FragTrap& fragTrap);
         
-        ScavTrap& operator=(const ScavTrap& scavTrap);
+        FragTrap& operator=(const FragTrap& fragTrap);
 
-        ~ScavTrap();
+        ~FragTrap();
 
-        bool get_isModeGuardGate(void) const;
-        void set_isModeGuardGate(bool _isGuardGate);
+        bool get_highFivesGuys(void) const;
+        void set_highFivesGuys(bool _isHighFive);
 
-        void guardGate(void);
+        void highFivesGuys(void);
     
     private:
-        bool _isModeGuardGate;      
+        bool _isHighFive;
 };
 
 #endif
