@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ScavTrap.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gserafio <gserafio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 23:35:50 by gustavo-lin       #+#    #+#             */
-/*   Updated: 2026/03/18 18:33:15 by gserafio         ###   ########.fr       */
+/*   Updated: 2026/03/19 05:30:00 by gustavo-lin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ void ScavTrap::set_isModeGuardGate(bool _isGuardGate)
     _isModeGuardGate = _isGuardGate;
 }
 
-void ClapTrap::attack(const std::string& target)
+void ScavTrap::attack(const std::string& target)
 {
     if (_checkLifeAndEnergyPoints())
     {
-        std::cout << "ScavTrap " <<  _name << "attacks " << target << "causing " << _attackDamage << "points of damage!" << std::endl;
+        std::cout << "ScavTrap: " <<  _name << " attacks " << target << " causing " << _attackDamage << " points of damage! " << std::endl;
         _energyPoints--;
     }
 }
@@ -81,10 +81,10 @@ void ClapTrap::attack(const std::string& target)
 void ScavTrap::guardGate(void)
 {
     if (this->_hitPoints <= 0)
-		std::cout << "ScavTrap " << this->_name << " is already dead to Keeper mode" << std::endl;
+		std::cout << "ScavTrap: " << this->_name << " is already dead to Keeper mode" << std::endl;
 	else if (!this->_isModeGuardGate)
-		std::cout << "ScavTrap " << this->_name << " is now IN Gate keeper mode!" << std::endl;
+		std::cout << "ScavTrap: " << this->_name << " is now IN Gate keeper mode!" << std::endl;
 	else
-		std::cout << "ScavTrap " << this->_name << " is now OUT Gate keeper mode!" << std::endl;
+		std::cout << "ScavTrap: " << this->_name << " is now OUT Gate keeper mode!" << std::endl;
 	this->set_isModeGuardGate(true);
 }
