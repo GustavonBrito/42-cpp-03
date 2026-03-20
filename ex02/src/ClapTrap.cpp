@@ -6,7 +6,7 @@
 /*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/16 19:42:50 by gserafio          #+#    #+#             */
-/*   Updated: 2026/03/20 08:21:35 by gustavo-lin      ###   ########.fr       */
+/*   Updated: 2026/03/20 13:07:20 by gustavo-lin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ ClapTrap& ClapTrap::operator=(const ClapTrap& other)
     return *this;
 }
 
-bool ClapTrap::_checkLifeAndEnergyPoints(void)
+bool ClapTrap::_checkLifeAndEnergyPoints(void) const
 {
     if (_hitPoints >= 0 && _energyPoints >= 0)
     {
@@ -60,7 +60,7 @@ void ClapTrap::attack(const std::string& target)
 {
     if (_checkLifeAndEnergyPoints())
     {
-        std::cout << "ClapTrap: " <<  _name << "attacks " << target << "causing " << _attackDamage << "points of damage!" << std::endl;
+        std::cout << "ClapTrap: " <<  _name << " attacks " << target << "causing " << _attackDamage << "points of damage!" << std::endl;
         _energyPoints--;
     }
 }

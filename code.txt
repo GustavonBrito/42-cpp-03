@@ -1,0 +1,936 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ClapTrap.cpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/16 19:42:50 by gserafio          #+#    #+#             */
+/*   Updated: 2026/03/20 08:15:08 by gustavo-lin      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../includes/ClapTrap.hpp"
+
+ClapTrap::~ClapTrap(void){std::cout << "ClapTrap: Destructor dealocated" << std::endl;}
+
+ClapTrap::ClapTrap(ClapTrap const& class_copy):
+    _name(class_copy._name),
+    _hitPoints(class_copy._hitPoints),
+    _energyPoints(class_copy._energyPoints),
+    _attackDamage(class_copy._attackDamage)
+{
+    std::cout << "ClapTrap: Copy constructor called" << std::endl;
+}
+
+ClapTrap::ClapTrap(const std::string name) : _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(10)
+{
+    std::cout << "ClapTrap: Constructor called" << std::endl;
+}
+
+ClapTrap::ClapTrap(void) : _name("Unknown"), _hitPoints(10), _energyPoints(10), _attackDamage(10)
+{
+    std::cout << "ClapTrap: Default constructor called" << std::endl;
+}
+
+ClapTrap & ClapTrap::operator=(const ClapTrap &other) 
+{
+    std::cout << "ClapTrap: Copy assignment operator called" << std::endl;
+    if (this == &other)
+        return *this;
+    
+    this->_name = other._name;
+    this->_hitPoints = other._hitPoints;
+    this->_energyPoints = other._energyPoints;
+    this->_attackDamage = other._attackDamage; 
+    
+    return *this;
+};
+
+bool ClapTrap::_checkLifeAndEnergyPoints(void)
+{
+    if (_hitPoints >= 0 && _energyPoints >= 0)
+    {
+        return true;
+    }
+    else
+    {
+        std::cout << "ClapTrap: " << _name << " has no hit points or energy points left!" << std::endl;
+        return false;
+    }
+}
+
+void ClapTrap::attack(const std::string& target)
+{
+    if (_checkLifeAndEnergyPoints())
+    {
+        std::cout << "ClapTrap: " <<  _name << "attacks " << target << "causing " << _attackDamage << "points of damage!" << std::endl;
+        _energyPoints--;
+    }
+}
+
+void ClapTrap::takeDamage(unsigned int amount)
+{
+    if (_checkLifeAndEnergyPoints())
+    {
+        std::cout << "ClapTrap: " <<  _name << "has taken a significant " << amount << "of damage" << std::endl;
+        _hitPoints -= amount;
+    }
+}
+
+void ClapTrap::beRepaired(unsigned int amount)
+{
+    if (_checkLifeAndEnergyPoints())
+    {
+        std::cout << "ClapTrap: " <<  _name << "received a " << amount << "of life" << std::endl;
+        _hitPoints += amount;
+        _energyPoints--;
+    }
+}/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gserafio <gserafio@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/16 20:54:44 by gserafio          #+#    #+#             */
+/*   Updated: 2026/03/16 20:56:13 by gserafio         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "includes/ClapTrap.hpp"
+
+int main(void)
+{
+    std::cout << "=== Test 1: Constructor ===" << std::endl;
+    ClapTrap trap1("CL4P-TP");
+    
+    std::cout << "\n=== Test 2: Attack ===" << std::endl;
+    trap1.attack("Robot");
+    
+    std::cout << "\n=== Test 3: Take Damage ===" << std::endl;
+    trap1.takeDamage(3);
+    
+    std::cout << "\n=== Test 4: Be Repaired ===" << std::endl;
+    trap1.beRepaired(2);
+    
+    std::cout << "\n=== Test 5: Copy Constructor ===" << std::endl;
+    ClapTrap trap2(trap1);
+    
+    std::cout << "\n=== Test 6: Multiple Actions ===" << std::endl;
+    for (int i = 0; i < 11; i++)
+    {
+        trap1.attack("Enemy");
+    }
+    
+    std::cout << "\n=== Test 7: Out of Energy ===" << std::endl;
+    trap1.beRepaired(5);
+    
+    std::cout << "\n=== Test 8: Take Heavy Damage ===" << std::endl;
+    ClapTrap trap3("TestBot");
+    trap3.takeDamage(20);
+    trap3.attack("Target");
+    
+    std::cout << "\n=== Destructors ===" << std::endl;
+    return 0;
+}/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ClapTrap.hpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/16 18:29:00 by gserafio          #+#    #+#             */
+/*   Updated: 2026/03/20 08:15:02 by gustavo-lin      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef CLAPTRAP1_HPP
+#define CLAPTRAP1_HPP
+
+#include <iostream>
+
+class ClapTrap
+{
+    public:
+        ClapTrap(void);
+        ClapTrap(const std::string name);
+        ClapTrap(ClapTrap const& class_copy);
+        ClapTrap& operator=(const ClapTrap& scavTrap);
+        ~ClapTrap(void);
+        
+        void attack(const std::string& target);
+        void takeDamage(unsigned int amount);
+        void beRepaired(unsigned int amount);
+        
+    private:
+        bool _checkLifeAndEnergyPoints(void);
+        std::string _name;
+        int _hitPoints;
+        int _energyPoints;
+        int _attackDamage;
+};
+
+#endif
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ScavTrap.cpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/17 23:35:50 by gustavo-lin       #+#    #+#             */
+/*   Updated: 2026/03/19 05:30:00 by gustavo-lin      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../includes/ScavTrap.hpp"
+
+ScavTrap::ScavTrap(void): ClapTrap(), _isModeGuardGate(false)
+{
+	this->_hitPoints = 100;
+	this->_energyPoints = 50;
+	this->_attackDamage = 20;
+	std::cout << "ScavTrap: Default constructor called" << std::endl;
+}
+
+ScavTrap::ScavTrap(const std::string name)
+: ClapTrap(name), _isModeGuardGate(false)
+{
+	this->_hitPoints = 100;
+	this->_energyPoints = 50;
+	this->_attackDamage = 20;
+	std::cout << "ScavTrap: Parameterized constructor called" << std::endl;
+}
+
+ScavTrap::ScavTrap(const ScavTrap& scavTrap) : ClapTrap(scavTrap)
+{
+    std::cout << "ScavTrap: Copy constructor called" << std::endl;
+	this->_name = scavTrap._name;
+	this->_hitPoints = scavTrap._hitPoints;
+	this->_energyPoints = scavTrap._energyPoints;
+	this->_attackDamage = scavTrap._attackDamage;
+	this->_isModeGuardGate = scavTrap._isModeGuardGate;
+}
+
+ScavTrap & ScavTrap::operator=(const ScavTrap& scavTrap)
+{
+    std::cout << "ScavTrap: Copy assignment operator called" << std::endl;
+    if (this == &scavTrap)
+        return *this;
+    
+    this->_name = scavTrap._name;
+    this->_energyPoints = scavTrap._energyPoints;
+    this->_hitPoints = scavTrap._hitPoints;
+    this->_attackDamage = scavTrap._attackDamage;
+    this->_isModeGuardGate = scavTrap._isModeGuardGate;
+    
+    return *this;
+};
+
+ScavTrap::~ScavTrap()
+{
+    std::cout << "ScavTrap: Desctructor called" << std::endl;
+}
+
+bool ScavTrap::get_isModeGuardGate(void) const
+{
+    return _isModeGuardGate;
+}
+
+void ScavTrap::set_isModeGuardGate(bool _isGuardGate)
+{
+    _isModeGuardGate = _isGuardGate;
+}
+
+void ScavTrap::attack(const std::string& target)
+{
+    if (_checkLifeAndEnergyPoints())
+    {
+        std::cout << "ScavTrap: " <<  _name << " attacks " << target << " causing " << _attackDamage << " points of damage! " << std::endl;
+        _energyPoints--;
+    }
+}
+
+void ScavTrap::guardGate(void)
+{
+    if (this->_hitPoints <= 0)
+		std::cout << "ScavTrap: " << this->_name << " is already dead to Keeper mode" << std::endl;
+	else if (!this->_isModeGuardGate)
+		std::cout << "ScavTrap: " << this->_name << " is now IN Gate keeper mode!" << std::endl;
+	else
+		std::cout << "ScavTrap: " << this->_name << " is now OUT Gate keeper mode!" << std::endl;
+	this->set_isModeGuardGate(true);
+}/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ClapTrap.cpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/16 19:42:50 by gserafio          #+#    #+#             */
+/*   Updated: 2026/03/19 05:43:01 by gustavo-lin      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../includes/ClapTrap.hpp"
+
+ClapTrap::ClapTrap(void) : _name("Unknown"), _energyPoints(10), _hitPoints(10), _attackDamage(10)
+{
+    std::cout << "ClapTrap: Default constructor called" << std::endl;
+}
+
+ClapTrap::~ClapTrap(void){std::cout << "ClapTrap: Destructor dealocated" << std::endl;}
+
+ClapTrap::ClapTrap(const std::string name) : _name(name), _energyPoints(10), _hitPoints(10), _attackDamage(10)
+{
+    std::cout << "ClapTrap: Constructor called" << std::endl;
+}
+
+ClapTrap::ClapTrap(ClapTrap const& class_copy) : _name(class_copy._name), _energyPoints(class_copy._energyPoints), _hitPoints(class_copy._hitPoints), _attackDamage(class_copy._attackDamage)
+{
+    std::cout << "ClapTrap: Copy constructor called" << std::endl;
+}
+
+ClapTrap& ClapTrap::operator=(const ClapTrap& other)
+{
+    std::cout << "ClapTrap: Copy assignment operator called" << std::endl;
+    if (this == &other)
+        return *this;
+    
+    this->_name = other._name;
+    this->_energyPoints = other._energyPoints;
+    this->_hitPoints = other._hitPoints;
+    this->_attackDamage = other._attackDamage;
+    
+    return *this;
+}
+
+bool ClapTrap::_checkLifeAndEnergyPoints(void)
+{
+    if (_hitPoints >= 0 && _energyPoints >= 0)
+    {
+        return true;
+    }
+    else
+    {
+        std::cout << "ClapTrap: " << _name << " has no hit points or energy points left!" << std::endl;
+        return false;
+    }
+}
+
+void ClapTrap::attack(const std::string& target)
+{
+    if (_checkLifeAndEnergyPoints())
+    {
+        std::cout << "ClapTrap: " <<  _name << "attacks " << target << "causing " << _attackDamage << "points of damage!" << std::endl;
+        _energyPoints--;
+    }
+}
+
+void ClapTrap::takeDamage(unsigned int amount)
+{
+    if (_checkLifeAndEnergyPoints())
+    {
+        std::cout << "ClapTrap: " <<  _name << " has taken a significant " << amount << " of damage " << std::endl;
+        _hitPoints -= amount;
+    }
+}
+
+void ClapTrap::beRepaired(unsigned int amount)
+{
+    if (_checkLifeAndEnergyPoints())
+    {
+        std::cout << "ClapTrap: " <<  _name << "received a " << amount << "of life" << std::endl;
+        _hitPoints += amount;
+        _energyPoints--;
+    }
+}
+
+std::string ClapTrap::getName(void) const
+{
+    return this->_name;
+}
+
+unsigned int ClapTrap::getHitPoints(void) const
+{
+    return this->_hitPoints;
+}
+
+unsigned int ClapTrap::getEnergyPoints(void) const
+{
+    return this->_energyPoints;
+}
+
+unsigned int ClapTrap::getAttackDamage(void) const
+{
+    return this->_attackDamage;
+}
+
+void ClapTrap::setName(const std::string& name)
+{
+    this->_name = name;
+}
+
+void ClapTrap::setHitPoints(unsigned int hit_points)
+{
+    this->_hitPoints = hit_points;
+}
+
+void ClapTrap::setEnergyPoints(unsigned int energy_points)
+{
+    this->_energyPoints = energy_points;
+}
+
+void ClapTrap::setAttackDamage(unsigned int attack_damage)
+{
+    this->_attackDamage = attack_damage;
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/16 20:54:44 by gserafio          #+#    #+#             */
+/*   Updated: 2026/03/19 05:41:23 by gustavo-lin      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "includes/ClapTrap.hpp"
+#include "includes/ScavTrap.hpp"
+
+int main(void)
+{
+    std::cout << "===== CLAPTRAP TESTS =====" << std::endl;
+    
+    std::cout << "\n--- Test 1: ClapTrap Constructor ---" << std::endl;
+    ClapTrap clap1("CL4P-TP");
+    
+    std::cout << "\n--- Test 2: ClapTrap Attack ---" << std::endl;
+    clap1.attack("Goblin");
+    
+    std::cout << "\n--- Test 3: ClapTrap Take Damage ---" << std::endl;
+    clap1.takeDamage(3);
+    
+    std::cout << "\n--- Test 4: ClapTrap Be Repaired ---" << std::endl;
+    clap1.beRepaired(2);
+    
+    std::cout << "\n--- Test 5: ClapTrap Copy Constructor ---" << std::endl;
+    ClapTrap clap2(clap1);
+    std::cout << "clap2 created from clap1" << std::endl;
+    
+    std::cout << "\n--- Test 6: ClapTrap Assignment Operator ---" << std::endl;
+    ClapTrap clap3("OtherBot");
+    clap3 = clap1;
+    std::cout << "clap3 assigned from clap1" << std::endl;
+    
+    std::cout << "\n--- Test 7: ClapTrap Drain Energy ---" << std::endl;
+    for (int i = 0; i < 15; i++)
+    {
+        clap1.attack("Enemy");
+    }
+    
+    std::cout << "\n\n===== SCAVTRAP TESTS =====" << std::endl;
+    
+    std::cout << "\n--- Test 1: ScavTrap Constructor with Name ---" << std::endl;
+    ScavTrap scav1("Scavenger");
+    
+    std::cout << "\n--- Test 2: ScavTrap Default Constructor ---" << std::endl;
+    ScavTrap scav2;
+    
+    std::cout << "\n--- Test 3: ScavTrap Inherited Attack ---" << std::endl;
+    scav1.attack("Bandit");
+   
+    std::cout << "\n--- Test 4: ScavTrap Guard Gate ---" << std::endl;
+    scav1.guardGate();
+    
+    std::cout << "\n--- Test 5: ScavTrap Drain Energy ---" << std::endl;
+    for (int i = 0; i < 55; i++)
+    {
+        std::cout << i << " ";
+        scav1.attack("Goblin");
+    }
+    
+    std::cout << "\n--- Test 6: ScavTrap Copy Constructor ---" << std::endl;
+    ScavTrap scav3(scav1);
+    
+    std::cout << "\n--- Test 7: ScavTrap Assignment Operator ---" << std::endl;
+    ScavTrap scav4("Scav4");
+    scav4 = scav1;
+    
+    std::cout << "\n--- Test 8: ScavTrap Guard Gate When Dead ---" << std::endl;
+    ScavTrap scav5("DeadScav");
+    scav5.takeDamage(100);
+    scav5.guardGate();
+    
+    std::cout << "\n===== DESTRUCTORS =====" << std::endl;
+    return 0;
+}/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ScavTrap.hpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gserafio <gserafio@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/17 22:00:22 by gustavo-lin       #+#    #+#             */
+/*   Updated: 2026/03/18 18:26:12 by gserafio         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef SCAVTRAP_HPP
+#define SCAVTRAP_HPP
+
+#include "ClapTrap.hpp"
+
+class   ScavTrap : public ClapTrap 
+{
+    public:
+        ScavTrap(void);
+        ScavTrap(const std::string name);
+        ScavTrap(const ScavTrap& scavTrap);
+        
+        ScavTrap& operator=(const ScavTrap& scavTrap);
+
+        ~ScavTrap();
+
+        bool get_isModeGuardGate(void) const;
+        void set_isModeGuardGate(bool _isGuardGate);
+
+        void guardGate(void);
+        void attack(const std::string& target);
+        
+    private:
+        bool _isModeGuardGate;      
+};
+
+#endif/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ClapTrap.hpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/16 18:29:00 by gserafio          #+#    #+#             */
+/*   Updated: 2026/03/19 05:40:56 by gustavo-lin      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef CLAPTRAP_HPP
+#define CLAPTRAP_HPP
+
+#include <iostream>
+
+class ClapTrap
+{
+    public:
+        ClapTrap(void);
+        ClapTrap(const std::string name);
+        ClapTrap(ClapTrap const& class_copy);
+        ClapTrap& operator=(const ClapTrap& scavTrap);
+        ~ClapTrap(void);
+        
+        void attack(const std::string& target);
+        void takeDamage(unsigned int amount);
+        void beRepaired(unsigned int amount);
+
+        std::string getName(void) const;
+        unsigned int getHitPoints(void) const;
+        unsigned int getEnergyPoints(void) const;
+        unsigned int getAttackDamage(void) const;
+
+        void setName(const std::string& name);
+        void setHitPoints(unsigned int hit_points);
+        void setEnergyPoints(unsigned int energy_points);
+        void setAttackDamage(unsigned int attack_damage);
+      
+    protected:
+    
+        bool _checkLifeAndEnergyPoints(void);
+        std::string _name;
+        int _energyPoints;
+        int _hitPoints;
+        int _attackDamage;
+};
+
+#endif/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   FragTrap.cpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gserafio <gserafio@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/17 23:35:50 by gustavo-lin       #+#    #+#             */
+/*   Updated: 2026/03/18 18:49:55 by gserafio         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../includes/FragTrap.hpp"
+
+FragTrap::FragTrap(void): ClapTrap(), _isHighFive(false)
+{
+	this->_hitPoints = 100;
+	this->_energyPoints = 100;
+	this->_attackDamage = 30;
+	std::cout << "FragTrap: Default constructor called" << std::endl;
+}
+
+FragTrap::FragTrap(const std::string name)
+: ClapTrap(name), _isHighFive(false)
+{
+	this->_hitPoints = 100;
+	this->_energyPoints = 50;
+	this->_attackDamage = 20;
+	std::cout << "FragTrap: Parameterized constructor called" << std::endl;
+}
+
+FragTrap::FragTrap(const FragTrap& fragTrap) : ClapTrap(fragTrap)
+{
+    std::cout << "FragTrap: Copy constructor called" << std::endl;
+	this->_name = fragTrap._name;
+	this->_hitPoints = fragTrap._hitPoints;
+	this->_energyPoints = fragTrap._energyPoints;
+	this->_attackDamage = fragTrap._attackDamage;
+	this->_isHighFive = fragTrap._isHighFive;
+}
+
+FragTrap & FragTrap::operator=(const FragTrap& fragTrap)
+{
+    std::cout << "FragTrap: Copy assignment operator called" << std::endl;
+    if (this == &fragTrap)
+        return *this;
+    
+    this->_name = fragTrap._name;
+    this->_energyPoints = fragTrap._energyPoints;
+    this->_hitPoints = fragTrap._hitPoints;
+    this->_attackDamage = fragTrap._attackDamage;
+    this->_isHighFive = fragTrap._isHighFive;
+    
+    return *this;
+};
+
+FragTrap::~FragTrap()
+{
+    std::cout << "FragTrap: Desctructor called" << std::endl;
+}
+
+bool FragTrap::get_highFivesGuys(void) const
+{
+    return _isHighFive;
+}
+
+void FragTrap::set_highFivesGuys(bool _isGuardGate)
+{
+    _isHighFive = _isGuardGate;
+}
+
+void FragTrap::highFivesGuys(void)
+{
+    int i = 0;
+	std::string response;
+	
+	if (this->_hitPoints <= 0)
+		std::cout << "FragTrap: " << this->_name << " is already dead" << std::endl;
+
+	std::cout << "High five? (yes/no): ";
+    std::getline(std::cin, response);
+	while (response[i])
+	{
+		tolower(response[i]);
+		i++;
+	}
+	if (response.compare("yes") == 0)
+	{
+		std::cout << "FragTrap: highfives you!" << std::endl;
+		this->set_highFivesGuys(true);
+	}
+	else if (response.compare("no") == 0)
+	{
+		std::cout << "FragTrap: Is sad you dont want to high five him" << std::endl;	
+		this->set_highFivesGuys(false);
+	}
+	else
+		std::cout << "FragTrap: only accepts yes or no is accepted as response." << std::endl;
+}/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ClapTrap.cpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/16 19:42:50 by gserafio          #+#    #+#             */
+/*   Updated: 2026/03/20 08:21:35 by gustavo-lin      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../includes/ClapTrap.hpp"
+
+ClapTrap::ClapTrap(void) : _name("RandomClap"), _energyPoints(10), _hitPoints(10), _attackDamage(10)
+{
+    std::cout << "ClapTrap: Default constructor called" << std::endl;
+}
+
+ClapTrap::~ClapTrap(void){std::cout << "ClapTrap: Destructor dealocated" << std::endl;}
+
+ClapTrap::ClapTrap(const std::string name) : _name(name), _energyPoints(10), _hitPoints(10), _attackDamage(10)
+{
+    std::cout << "ClapTrap: Constructor called" << std::endl;
+}
+
+ClapTrap::ClapTrap(ClapTrap const& class_copy) : _name(class_copy._name), _energyPoints(class_copy._energyPoints), _hitPoints(class_copy._hitPoints), _attackDamage(class_copy._attackDamage)
+{
+    std::cout << "ClapTrap: Copy constructor called" << std::endl;
+}
+
+ClapTrap& ClapTrap::operator=(const ClapTrap& other)
+{
+    std::cout << "ClapTrap: Copy assignment operator called" << std::endl;
+    if (this == &other)
+        return *this;
+    
+    this->_name = other._name;
+    this->_energyPoints = other._energyPoints;
+    this->_hitPoints = other._hitPoints;
+    this->_attackDamage = other._attackDamage;
+    
+    return *this;
+}
+
+bool ClapTrap::_checkLifeAndEnergyPoints(void)
+{
+    if (_hitPoints >= 0 && _energyPoints >= 0)
+    {
+        return true;
+    }
+    else
+    {
+        std::cout << "ClapTrap: " << _name << " has no hit points or energy points left!" << std::endl;
+        return false;
+    }
+}
+
+void ClapTrap::attack(const std::string& target)
+{
+    if (_checkLifeAndEnergyPoints())
+    {
+        std::cout << "ClapTrap: " <<  _name << "attacks " << target << "causing " << _attackDamage << "points of damage!" << std::endl;
+        _energyPoints--;
+    }
+}
+
+void ClapTrap::takeDamage(unsigned int amount)
+{
+    if (_checkLifeAndEnergyPoints())
+    {
+        std::cout << "ClapTrap: " <<  _name << "has taken a significant " << amount << "of damage" << std::endl;
+        _hitPoints -= amount;
+    }
+}
+
+void ClapTrap::beRepaired(unsigned int amount)
+{
+    if (_checkLifeAndEnergyPoints())
+    {
+        std::cout << "ClapTrap: " <<  _name << "received a " << amount << "of life" << std::endl;
+        _hitPoints += amount;
+        _energyPoints--;
+    }
+}
+
+std::string ClapTrap::getName(void) const
+{
+    return this->_name;
+}
+
+unsigned int ClapTrap::getHitPoints(void) const
+{
+    return this->_hitPoints;
+}
+
+unsigned int ClapTrap::getEnergyPoints(void) const
+{
+    return this->_energyPoints;
+}
+
+unsigned int ClapTrap::getAttackDamage(void) const
+{
+    return this->_attackDamage;
+}
+
+void ClapTrap::setName(const std::string& name)
+{
+    this->_name = name;
+}
+
+void ClapTrap::setHitPoints(unsigned int hit_points)
+{
+    this->_hitPoints = hit_points;
+}
+
+void ClapTrap::setEnergyPoints(unsigned int energy_points)
+{
+    this->_energyPoints = energy_points;
+}
+
+void ClapTrap::setAttackDamage(unsigned int attack_damage)
+{
+    this->_attackDamage = attack_damage;
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gserafio <gserafio@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/16 20:54:44 by gserafio          #+#    #+#             */
+/*   Updated: 2026/03/18 19:02:00 by gserafio         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "includes/ClapTrap.hpp"
+#include "includes/FragTrap.hpp"
+
+int main(void)
+{
+    std::cout << "===== CLAPTRAP TESTS =====" << std::endl;
+    
+    std::cout << "\n--- Test 1: ClapTrap Constructor ---" << std::endl;
+    ClapTrap clap1("CL4P-TP");
+    
+    std::cout << "\n--- Test 2: ClapTrap Attack ---" << std::endl;
+    clap1.attack("Goblin");
+    
+    std::cout << "\n--- Test 3: ClapTrap Take Damage ---" << std::endl;
+    clap1.takeDamage(3);
+    
+    std::cout << "\n--- Test 4: ClapTrap Be Repaired ---" << std::endl;
+    clap1.beRepaired(2);
+    
+    std::cout << "\n--- Test 5: ClapTrap Copy Constructor ---" << std::endl;
+    ClapTrap clap2(clap1);
+    std::cout << "clap2 created from clap1" << std::endl;
+    
+    std::cout << "\n--- Test 6: ClapTrap Assignment Operator ---" << std::endl;
+    ClapTrap clap3("OtherBot");
+    clap3 = clap1;
+    std::cout << "clap3 assigned from clap1" << std::endl;
+    
+    std::cout << "\n--- Test 7: ClapTrap Drain Energy ---" << std::endl;
+    for (int i = 0; i < 15; i++)
+    {
+        clap1.attack("Enemy");
+    }
+    
+    std::cout << "\n\n===== FRAGTRAP TESTS =====" << std::endl;
+    
+    std::cout << "\n--- Test 1: FragTrap Constructor with Name ---" << std::endl;
+    FragTrap frag1("Scavenger-1");
+    
+    std::cout << "\n--- Test 2: FragTrap Default Constructor ---" << std::endl;
+    FragTrap frag2;
+    
+    std::cout << "\n--- Test 3: FragTrap Guard Gate ---" << std::endl;
+    frag1.highFivesGuys();
+      
+    std::cout << "\n--- Test 4: FragTrap Copy Constructor ---" << std::endl;
+    FragTrap frag3(frag1);
+    
+    std::cout << "\n--- Test 5: FragTrap Assignment Operator ---" << std::endl;
+    FragTrap frag4("Frag4");
+    frag3 = frag1;
+    
+    std::cout << "\n--- Test 6: FragTrap Guard Gate When Dead ---" << std::endl;
+    FragTrap frag5("DeadScav");
+    frag5.highFivesGuys();
+    
+    std::cout << "\n===== DESTRUCTORS =====" << std::endl;
+    return 0;
+}/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ClapTrap.hpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/16 18:29:00 by gserafio          #+#    #+#             */
+/*   Updated: 2026/03/20 08:22:08 by gustavo-lin      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef CLAPTRAP_HPP
+#define CLAPTRAP_HPP
+
+#include <iostream>
+
+class ClapTrap
+{
+    public:
+        ClapTrap(void);
+        ClapTrap(const std::string name);
+        ClapTrap(ClapTrap const& class_copy);
+        ClapTrap& operator=(const ClapTrap& scavTrap);
+        ~ClapTrap(void);
+        
+        void attack(const std::string& target);
+        void takeDamage(unsigned int amount);
+        void beRepaired(unsigned int amount);
+
+        std::string getName(void) const;
+        unsigned int getHitPoints(void) const;
+        unsigned int getEnergyPoints(void) const;
+        unsigned int getAttackDamage(void) const;
+
+        void setName(const std::string& name);
+        void setHitPoints(unsigned int hit_points);
+        void setEnergyPoints(unsigned int energy_points);
+        void setAttackDamage(unsigned int attack_damage);
+      
+    protected:
+    
+        bool _checkLifeAndEnergyPoints(void);
+        std::string _name;
+        int _energyPoints;
+        int _hitPoints;
+        int _attackDamage;
+};
+
+#endif/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   FragTrap.hpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gserafio <gserafio@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/17 22:00:22 by gustavo-lin       #+#    #+#             */
+/*   Updated: 2026/03/18 18:54:31 by gserafio         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef FRAGTRAP_HPP
+#define FRAGTRAP_HPP
+
+#include "ClapTrap.hpp"
+
+class   FragTrap : public ClapTrap 
+{
+    public:
+        FragTrap(void);
+        FragTrap(const std::string name);
+        FragTrap(const FragTrap& fragTrap);
+        
+        FragTrap& operator=(const FragTrap& fragTrap);
+
+        ~FragTrap();
+
+        bool get_highFivesGuys(void) const;
+        void set_highFivesGuys(bool _isHighFive);
+
+        void highFivesGuys(void);
+    
+    private:
+        bool _isHighFive;
+};
+
+#endif

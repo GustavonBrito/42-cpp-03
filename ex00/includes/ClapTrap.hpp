@@ -6,7 +6,7 @@
 /*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/16 18:29:00 by gserafio          #+#    #+#             */
-/*   Updated: 2026/03/20 08:15:02 by gustavo-lin      ###   ########.fr       */
+/*   Updated: 2026/03/20 13:06:58 by gustavo-lin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ class ClapTrap
         void beRepaired(unsigned int amount);
         
     private:
-        bool _checkLifeAndEnergyPoints(void);
+        bool _checkLifeAndEnergyPoints(void) const;
         std::string _name;
         int _hitPoints;
         int _energyPoints;

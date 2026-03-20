@@ -6,7 +6,7 @@
 /*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/16 18:29:00 by gserafio          #+#    #+#             */
-/*   Updated: 2026/03/19 05:40:56 by gustavo-lin      ###   ########.fr       */
+/*   Updated: 2026/03/20 13:07:10 by gustavo-lin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ class ClapTrap
       
     protected:
     
-        bool _checkLifeAndEnergyPoints(void);
+        bool _checkLifeAndEnergyPoints(void) const;
         std::string _name;
         int _energyPoints;
         int _hitPoints;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   FragTrap.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gserafio <gserafio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 23:35:50 by gustavo-lin       #+#    #+#             */
-/*   Updated: 2026/03/18 18:49:55 by gserafio         ###   ########.fr       */
+/*   Updated: 2026/03/20 13:05:24 by gustavo-lin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void FragTrap::highFivesGuys(void)
     std::getline(std::cin, response);
 	while (response[i])
 	{
-		tolower(response[i]);
+		response[i] = std::tolower(response[i]);
 		i++;
 	}
 	if (response.compare("yes") == 0)
