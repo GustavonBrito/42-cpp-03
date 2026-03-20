@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ClapTrap.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gserafio <gserafio@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/16 19:42:50 by gserafio          #+#    #+#             */
-/*   Updated: 2026/03/18 18:56:28 by gserafio         ###   ########.fr       */
+/*   Updated: 2026/03/20 08:21:35 by gustavo-lin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ ClapTrap& ClapTrap::operator=(const ClapTrap& other)
 
 bool ClapTrap::_checkLifeAndEnergyPoints(void)
 {
-    if (_hitPoints == 0 && _energyPoints == 0)
+    if (_hitPoints >= 0 && _energyPoints >= 0)
     {
         return true;
     }

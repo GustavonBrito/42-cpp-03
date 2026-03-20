@@ -6,7 +6,7 @@
 /*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/16 19:42:50 by gserafio          #+#    #+#             */
-/*   Updated: 2026/03/18 02:05:08 by gustavo-lin      ###   ########.fr       */
+/*   Updated: 2026/03/20 08:15:08 by gustavo-lin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,21 @@ ClapTrap::~ClapTrap(void){std::cout << "ClapTrap: Destructor dealocated" << std:
 
 ClapTrap::ClapTrap(ClapTrap const& class_copy):
     _name(class_copy._name),
-    _energyPoints(class_copy._energyPoints),
     _hitPoints(class_copy._hitPoints),
+    _energyPoints(class_copy._energyPoints),
     _attackDamage(class_copy._attackDamage)
 {
     std::cout << "ClapTrap: Copy constructor called" << std::endl;
 }
 
-ClapTrap::ClapTrap(const std::string name) : _name(name), _energyPoints(10), _hitPoints(10), _attackDamage(10)
+ClapTrap::ClapTrap(const std::string name) : _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(10)
 {
     std::cout << "ClapTrap: Constructor called" << std::endl;
+}
+
+ClapTrap::ClapTrap(void) : _name("Unknown"), _hitPoints(10), _energyPoints(10), _attackDamage(10)
+{
+    std::cout << "ClapTrap: Default constructor called" << std::endl;
 }
 
 ClapTrap & ClapTrap::operator=(const ClapTrap &other) 
@@ -35,21 +40,16 @@ ClapTrap & ClapTrap::operator=(const ClapTrap &other)
         return *this;
     
     this->_name = other._name;
-    this->_energyPoints = other._energyPoints;
     this->_hitPoints = other._hitPoints;
+    this->_energyPoints = other._energyPoints;
     this->_attackDamage = other._attackDamage; 
     
     return *this;
 };
 
-ClapTrap::ClapTrap(void) : _name("Unknown"), _energyPoints(10), _hitPoints(10), _attackDamage(10)
-{
-    std::cout << "ClapTrap: Default constructor called" << std::endl;
-}
-
 bool ClapTrap::_checkLifeAndEnergyPoints(void)
 {
-    if (_hitPoints == 0 && _energyPoints == 0)
+    if (_hitPoints >= 0 && _energyPoints >= 0)
     {
         return true;
     }
